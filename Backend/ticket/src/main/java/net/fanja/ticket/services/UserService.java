@@ -16,4 +16,6 @@ public interface UserService {
     List<TicketDto> getTicketsAssignedToUser(Long userId);
 
     UserDto getUserById(Long id);
+
+    public boolean isUserAllowedAccess(Long userId, String username);
 }

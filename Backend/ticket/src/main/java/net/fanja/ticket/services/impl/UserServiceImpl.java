@@ -132,4 +132,10 @@ public class UserServiceImpl implements UserService {
                         ErrorCodes.USER_NOT_FOUND)
                 );
     }
+
+    @Override
+    public boolean isUserAllowedAccess(Long userId, String username) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user != null && user.getUsername().equals(username);
+    }
 }

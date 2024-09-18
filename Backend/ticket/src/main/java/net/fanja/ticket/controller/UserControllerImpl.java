@@ -9,6 +9,9 @@ import net.fanja.ticket.services.TicketService;
 import net.fanja.ticket.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -39,6 +42,21 @@ public class UserControllerImpl implements UserController {
         log.debug("findAllTicketsAssigned Alls() - REST request to get ALL TicketDto ");
         List<TicketDto> ticketDtos = userService.getTicketsAssignedToUser(userId);
         return new ResponseEntity<>(ticketDtos, HttpStatus.OK);
+       /* Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = null;
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            currentUsername = userDetails.getUsername();
+        }
+
+
+        if (userService.isUserAllowedAccess(userId, currentUsername)) {
+            List<TicketDto> ticketDtos = userService.getTicketsAssignedToUser(userId);
+            return new ResponseEntity<>(ticketDtos, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }*/
     }
 
     @Override
